@@ -19,7 +19,7 @@ download the files.
 
 Add this line to your application's Gemfile:
 
-    gem 'browse-everything'
+    gem 'browse-everything', git: 'https://github.com/yuri-val/browse-everything.git'
 
 And then execute:
 
