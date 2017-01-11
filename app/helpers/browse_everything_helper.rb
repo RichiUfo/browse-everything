@@ -26,4 +26,10 @@ module BrowseEverythingHelper
     acceptable_types << 'application/x-directory'
     acceptable_types.any? { |type| mime_match?(file.type, type) }
   end
+
+  def image_prew full_path
+    img_path = full_path.split(':')[1]
+    b64img = Base64.encode64(open(img_path, &:read))
+    image_tag "data:image/jpeg;base64,#{b64img}", size: '50'
+  end
 end

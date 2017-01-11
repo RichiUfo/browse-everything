@@ -6,6 +6,9 @@
  end
 %>
 <tr role="row" tabindex="-1" data-ev-location="<%= file.location %>" data-tt-id="<%=path%>" data-tt-parent-id="<%=parent%>" data-tt-branch="<%=file.container? ? 'true' : 'false'%>">
+  <td role="gridcell" class="ev-image-prew">
+    <%= image_prew(file.location) unless file.type.to_s['image'].nil? %>
+  </td>
   <td role="gridcell" class="<%=file.container? ? 'ev-container' : 'ev-file'%> ev-file-name">
     <% if disabled %>
       <span title="<%= t('browse_everything.size_disabled', max_size: number_to_human_size(max_size)) %>"class="<%=file.container? ? 'folder' : 'file'%>" aria-hidden="true">
