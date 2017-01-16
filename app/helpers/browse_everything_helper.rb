@@ -27,9 +27,16 @@ module BrowseEverythingHelper
     acceptable_types.any? { |type| mime_match?(file.type, type) }
   end
 
-  def image_prew full_path
+  def image_prew(full_path)
     img_path = full_path.split(':')[1]
     b64img = Base64.encode64(open(img_path, &:read))
     image_tag "data:image/jpeg;base64,#{b64img}", size: '50'
+  end
+
+  def b_create_folder(full_path)
+    dir_path = full_path.split(':')[1]
+    button_tag('', curr_path: dir_path, onclick: 'addSubFolder(this)') do
+      content_tag(:i, '*', class: 'fa fa-folder').html_safe
+    end
   end
 end

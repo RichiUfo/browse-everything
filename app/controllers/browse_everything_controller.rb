@@ -33,6 +33,16 @@ class BrowseEverythingController < ActionController::Base
     end
   end
 
+  def upload_file
+    file = params[:image]
+  end
+
+  def create_sub_folder
+    curr_path = params[:curr_path]
+    fold_name = params[:fold_name]
+    Dir.mkdir([curr_path, fold_name].join('/'))
+  end
+
   private
 
   def auth_link

@@ -8,6 +8,7 @@
 <tr role="row" tabindex="-1" data-ev-location="<%= file.location %>" data-tt-id="<%=path%>" data-tt-parent-id="<%=parent%>" data-tt-branch="<%=file.container? ? 'true' : 'false'%>">
   <td role="gridcell" class="ev-image-prew">
     <%= image_prew(file.location) unless file.type.to_s['image'].nil? %>
+    <%= b_create_folder(file.location) if file.container? %>
   </td>
   <td role="gridcell" class="<%=file.container? ? 'ev-container' : 'ev-file'%> ev-file-name">
     <% if disabled %>
