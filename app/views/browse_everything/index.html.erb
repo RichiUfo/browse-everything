@@ -14,8 +14,10 @@
                 <input id="upload" type="file" style="display: none;">
               </label>
             </button>
-            <button type="button" class="btn btn-default" id="add_folder">
-              <label class="btn btn-primary">
+            <button type="button" class="btn btn-default">
+              <label class="btn btn-primary"
+                      onclick='addSubFolder(this)'
+                      curr_path="<%=BrowseEverything.config["file_system"][:home]%>">
                 <i class="fa fa-folder fa-plus-circle"></i>
               </label>
             </button>
@@ -36,48 +38,48 @@
             <% end %>
         </div>
         <script>
-        $("document").ready(function(){
+          $("document").ready(function(){
 
-            $("#upload").change(function() {
+              $("#upload").change(function() {
 
-              var $input = $("#upload");
-              var fd = new FormData;
+                var $input = $("#upload");
+                var fd = new FormData;
 
-              fd.append('img', $input.prop('files')[0]);
+                fd.append('img', $input.prop('files')[0]);
 
-              $.ajax({
-                  url: '/browse/upload_file',
-                  data: fd,
-                  processData: false,
-                  contentType: false,
-                  type: 'POST',
-                  success: function (data) {
-                      alert(data);
-                  }
+                $.ajax({
+                    url: '/browse/upload_file',
+                    data: fd,
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    success: function (data) {
+                        alert(data);
+                    }
+                });
+                return false;
               });
-              return false;
-            });
 
-        });
-        function addSubFolder(el){
-          var curr_path = el.getAttribute('curr_path');
-          var fold_name = prompt('sub folder name');
-          var fd = new FormData;
-          fd.append('curr_path', curr_path);
-          fd.append('fold_name', fold_name);
-          $.ajax({
-              url: '/browse/create_sub_folder',
-              data: fd,
-              processData: false,
-              contentType: false,
-              type: 'POST',
-              success: function (data) {
-                  alert(data);
-              }
           });
-          return false;
-        };
-        </script>
+          function addSubFolder(el){
+            var curr_path = el.getAttribute('curr_path');
+            var fold_name = prompt('sub folder name');
+            var fd = new FormData;
+            fd.append('curr_path', curr_path);
+            fd.append('fold_name', fold_name);
+            $.ajax({
+                url: '/browse/create_sub_folder',
+                data: fd,
+                processData: false,
+                contentType: false,
+                type: 'POST',
+                success: function (data) {
+                    $("#file-list").innerHTML = data.html;
+                }
+            });
+            return false;
+          };
+          </script>
         <% if bootstrap_three? %>
       </div>
 </div><% end %>
