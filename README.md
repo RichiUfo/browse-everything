@@ -76,8 +76,24 @@ To trigger browse-everything using data attributes, set the _data-toggle_ attrib
 For example:
 
 ```html
-<button type="button" data-toggle="browse-everything" data-route="<%=browse_everything_engine.root_path%>"
-  data-target="#myForm" class="btn btn-large btn-success" id="browse">Browse!</button>
+<%= hidden_field_tag 'files' %>
+<%= form_tag('/file', id: 'main_form', method: 'post') do %>
+  <%= button_tag("Browse", type: 'button', class: 'btn btn-large btn-success', id: "browse-btn",
+        'data-toggle' => 'browse-everything', 'data-route' => browse_everything_engine.root_path,
+        'data-target' => '#main_form', 'data-accept' => 'image/*' ) %>
+  <%= button_tag("Submit", type: 'submit', class: 'btn btn-large btn-primary', id: "submit-btn") %>
+<% end %>
+<p id="status">0 items selected</p>
+<script>
+    $(document).on('turbolinks:load', function () {
+        $('#browse-btn').browseEverything().done(function (data) {
+            $('#status').html(data.length.toString() + " items selected");
+            $('#files').val(JSON.stringify(data));
+        }).cancel(function () {
+            window.alert('Canceled!')
+        });
+    });
+</script>
 ```
 
 #### Via JavaScript
@@ -143,7 +159,27 @@ If you initialized browse-everything via data-attributes and set the _target_ op
   }
 }
 ```
-
+### Controller
+Add `private` method to your controller
+```ruby
+  def attach_images(images, entity)
+    ent_name = entity.class.to_s.downcase
+    images.each do |image|
+      b_file = Image.find_or_create_by path: image.file
+      b_file.name = image.file_name
+      if b_file.save
+        EntityImage.create entity: ent_name, entity_id: entity.id, file: b_file
+      end
+    end
+  end
+ ```
+ 
+ and call it from `create` and `update` actions:
+ ```ruby
+ attach_images(params[:files], @post)
+ ```
+ where `@post` - your class instance
+ 
 ### Retrieving Files
 
 The `BrowseEverything::Retriever` class has two methods, `#retrieve` and `#download`, that
