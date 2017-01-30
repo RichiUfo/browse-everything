@@ -38,6 +38,7 @@ class BrowseEverythingController < ActionController::Base
     name = params[:name]
     File.open(name, 'wb') do |f|
       f.write file.read
+      p f
     end
   end
 
