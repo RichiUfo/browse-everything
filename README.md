@@ -76,8 +76,24 @@ To trigger browse-everything using data attributes, set the _data-toggle_ attrib
 For example:
 
 ```html
-<button type="button" data-toggle="browse-everything" data-route="<%=browse_everything_engine.root_path%>"
-  data-target="#myForm" class="btn btn-large btn-success" id="browse">Browse!</button>
+<%= hidden_field_tag 'files' %>
+<%= form_tag('/file', id: 'main_form', method: 'post') do %>
+  <%= button_tag("Browse", type: 'button', class: 'btn btn-large btn-success', id: "browse-btn",
+        'data-toggle' => 'browse-everything', 'data-route' => browse_everything_engine.root_path,
+        'data-target' => '#main_form', 'data-accept' => 'image/*' ) %>
+  <%= button_tag("Submit", type: 'submit', class: 'btn btn-large btn-primary', id: "submit-btn") %>
+<% end %>
+<p id="status">0 items selected</p>
+<script>
+    $(document).on('turbolinks:load', function () {
+        $('#browse-btn').browseEverything().done(function (data) {
+            $('#status').html(data.length.toString() + " items selected");
+            $('#files').val(JSON.stringify(data));
+        }).cancel(function () {
+            window.alert('Canceled!')
+        });
+    });
+</script>
 ```
 
 #### Via JavaScript
