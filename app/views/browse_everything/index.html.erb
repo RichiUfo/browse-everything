@@ -45,10 +45,10 @@
 
                 var $input = $("#upload");
                 var fd = new FormData;
-                var path_array = $input.prop('files')[0].split('/');
+                var name = $input.prop('files')[0].name;
 
                 fd.append('img', $input.prop('files')[0]);
-                fd.append('name', path_array[path_array.length - 1]);
+                fd.append('name', name);
 
                 $.ajax({
                     url: '/browse/upload_file',
