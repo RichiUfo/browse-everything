@@ -1,7 +1,7 @@
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
+@import "mixins/_vendor-prefixes";
 
 @import "font-awesome";
 
-@import "mixins/_vendor-prefixes";
 @import "browse_everything/browse_everything";
