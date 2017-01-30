@@ -22,6 +22,7 @@
               </label>
             </button>
         </div>
+        <%= hidden_field_tag 'curr_path' %>
         <div class="modal-body ev-body" tabindex="-1">
             <div class="ev-browser row<%=bs2('-fluid')%>" aria-live="polite">
                 <div class="<%=fa3or4('fa3','fa4')%> <%=bs2or3('bs2 span','bs3 col-xs-')%>12 ev-files list">
@@ -44,8 +45,10 @@
 
                 var $input = $("#upload");
                 var fd = new FormData;
+                var path_array = $input.prop('files')[0].split('/');
 
                 fd.append('img', $input.prop('files')[0]);
+                fd.append('name', path_array[path_array.length - 1]);
 
                 $.ajax({
                     url: '/browse/upload_file',
@@ -53,9 +56,9 @@
                     processData: false,
                     contentType: false,
                     type: 'POST',
-                    success: function (data) {
-                        alert(data);
-                    }
+                    //success: function (data) {
+                    //    alert(data);
+                    //}
                 });
                 return false;
               });
@@ -78,6 +81,9 @@
                 }
             });
             return false;
+          };
+          function setCurrPath(row){
+            $('#curr_path').val($(row).attr("data-ev-location"));
           };
           </script>
         <% if bootstrap_three? %>

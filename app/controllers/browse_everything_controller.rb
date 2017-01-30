@@ -34,7 +34,7 @@ class BrowseEverythingController < ActionController::Base
   end
 
   def upload_file
-    file = params[:image]
+    file = params[:img]
   end
 
   def create_sub_folder
