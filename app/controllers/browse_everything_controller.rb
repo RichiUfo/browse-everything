@@ -36,9 +36,8 @@ class BrowseEverythingController < ActionController::Base
   def upload_file
     file = params[:img]
     name = params[:name]
-    File.open(name, 'wb') do |f|
+    File.open("public/uploaded/#{name}", 'wb') do |f|
       f.write file.read
-      p f
     end
   end
 
