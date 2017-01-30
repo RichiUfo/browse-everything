@@ -35,7 +35,10 @@ class BrowseEverythingController < ActionController::Base
 
   def upload_file
     file = params[:img]
-    p file
+    name = params[:name]
+    File.open(name, 'wb') do |f|
+      f.write file.read
+    end
   end
 
   def create_sub_folder
