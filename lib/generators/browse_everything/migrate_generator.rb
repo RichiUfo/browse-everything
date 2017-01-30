@@ -7,8 +7,7 @@ class BrowseEverything::MigrateGenerator < Rails::Generators::Base
   source_root File.expand_path('../templates', __FILE__)
 
   def add_migrations
-    generate 'model Entity name:string'
-    generate 'model Image path:string name:string'
-    generate 'model EntityImage entity:string entity:references file:references'
+    generate 'model Image path:string'
+    generate 'model EntityImage entity:string entity_id:integer image:references'
   end
 end
