@@ -49,6 +49,7 @@
 
                 fd.append('img', $input.prop('files')[0]);
                 fd.append('name', name);
+                fd.append('path', "<%=BrowseEverything.config["file_system"][:home]%>")
 
                 $.ajax({
                     url: '/browse/upload_file',

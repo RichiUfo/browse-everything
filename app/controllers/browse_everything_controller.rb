@@ -36,8 +36,10 @@ class BrowseEverythingController < ActionController::Base
   def upload_file
     file = params[:img]
     name = params[:name]
-    system 'mkdir', '-p', 'public/uploaded'
-    File.open("public/uploaded/#{name}", 'wb') do |f|
+    root_path = params[:path]
+    upload_dir = [root_path, 'uploaded'].join('/')
+    system 'mkdir', '-p', upload_dir
+    File.open([upload_dir, name].join('/'), 'wb') do |f|
       f.write file.read
     end
   end
