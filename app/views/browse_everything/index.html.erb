@@ -58,7 +58,7 @@
                     contentType: false,
                     type: 'POST',
                     success: function (data) {
-                        alert(data);
+                        $("table.file-list").replaceWith(data);
                     }
                 });
                 return false;
