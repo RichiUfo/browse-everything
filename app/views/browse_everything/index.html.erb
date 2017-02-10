@@ -50,15 +50,21 @@
                 fd.append('img', $input.prop('files')[0]);
                 fd.append('name', name);
                 fd.append('path', "<%=BrowseEverything.config["file_system"][:home]%>")
+                fd.append('provider', 'file_system');
 
                 $.ajax({
                     url: '/browse/upload_file',
                     data: fd,
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                    },
                     processData: false,
                     contentType: false,
                     type: 'POST',
                     success: function (data) {
-                        alert(data);
+                        //$("table.file-list").replaceWith(data);
+                        //$("#file-list").html(data);
+                        //alert(data);
                     }
                 });
                 return false;
@@ -71,6 +77,8 @@
             var fd = new FormData;
             fd.append('curr_path', curr_path);
             fd.append('fold_name', fold_name);
+            fd.append('provider', 'file_system');
+
             $.ajax({
                 url: '/browse/create_sub_folder',
                 data: fd,
@@ -78,7 +86,7 @@
                 contentType: false,
                 type: 'POST',
                 success: function (data) {
-                    $("#file-list").innerHTML = data.html;
+                    //$("#file-list").innerHTML = data.html;
                 }
             });
             return false;
