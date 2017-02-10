@@ -42,7 +42,6 @@ class BrowseEverythingController < ActionController::Base
     File.open([upload_dir, name].join('/'), 'wb') do |f|
       f.write file.read
     end
-    p provider
     render plain: 'ok' # render_to_string(partial: 'files', layout: false, locals: { provider: provider })
   end
 
